@@ -1,8 +1,6 @@
 consolation
 ===========
 
-Add some flavors to node's default console.log
-
 This module adds some sprinkles to node's vanilla console.
 
 ##How it looks
@@ -31,5 +29,5 @@ You can pass options when creating the object:
 console = consolation ({title: 'My file name', time: true});
 ```
 Available options:
- * title [String]: the title of your logger, usually (but not necessarily) the name of the file (default is nothing),
- * time [Boolean]: whether to display the time on each log line (default is `false`)
+ * `title [String]`: the title of your logger, usually (but not necessarily) the name of the file (default is nothing),
+ * `time [Boolean]`: whether to display the time on each log line (default is `false`)
