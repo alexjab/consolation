@@ -74,10 +74,5 @@ var consolation = module.exports = function () {
     return root._fn (arguments, 'yellow', 'warning-sign');
   };
 
-  root.blob = function () {
-    return console.log.apply (this, ['test %d, %d'.green, 3, 8]);
-    //return console.log.apply (this, arguments);
-  };
-
   return root;
 };
