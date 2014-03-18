@@ -1,6 +1,6 @@
 {
   "name": "consolation",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Add some flavors to node's default console.log",
   "main": "consolation.js",
   "scripts": {
