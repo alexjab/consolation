@@ -107,7 +107,7 @@ describe ('consolation._time', function () {
 
     var actual_color = actual.match (expected).input;
     var actual_time = actual.match (expected)[0];
-    actual_color.should.equal (actual_time.grey);
+    actual_color.should.equal (actual_time.blue);
 
     done ();
   });

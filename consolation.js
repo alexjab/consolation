@@ -43,7 +43,7 @@ var consolation = module.exports = function () {
     args = args.slice ();
     if (root.options.time) {
       var now = new Date ();
-      return ([([now.getHours (), now.getMinutes (), now.getSeconds ()].join (':')+'.'+now.getMilliseconds ()).grey]).concat (args);
+      return ([([now.getHours (), now.getMinutes (), now.getSeconds ()].join (':')+'.'+now.getMilliseconds ()).blue]).concat (args);
     } else {
       return args;
     }
