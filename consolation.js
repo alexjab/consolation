@@ -1,11 +1,14 @@
+var path = require('path');
+
 var colors = require ('colors');
 
 var consolation = module.exports = function () {
   var root = console;
 
   root.options = {
-    'title': '',
-    'time': false,
+    'title': process.argv.length > 1?path.basename (process.argv[1]):'',
+    'use_time': true,
+    'use_symbols': true,
     'log_level': 'info'
   };
 
@@ -13,6 +16,10 @@ var consolation = module.exports = function () {
   Object.keys (options).forEach (function (opt) {
     root.options[opt] = this[opt];
   }, options);
+
+  if (root.options.time) {
+    console.log ("Deprecation warning: option 'time' will be removed in version 0.1.0; you should use 'use_time' instead (it works the same way).".grey);
+  }
 
   root._args = function (_args) {
     return Array.prototype.slice.call (_args);
@@ -24,9 +31,11 @@ var consolation = module.exports = function () {
   };
 
   root._symbol = function (args, color, symb) {
-    args = args.slice ();
-    var _symb = {"check": "✓", "cross": "✗", "warning-sign": "⚠", "note": "♪"}[symb] || "";
-    args.push (_symb[color] || _symb);
+    if (root.options.use_symbols) {
+      args = args.slice ();
+      var _symb = {"check": "✓", "cross": "✗", "warning-sign": "⚠", "note": "♪"}[symb] || "";
+      args.push (_symb[color] || _symb);
+    }
     return args;
   };
 
@@ -42,7 +51,7 @@ var consolation = module.exports = function () {
 
   root._time = function (args) {
     args = args.slice ();
-    if (root.options.time) {
+    if (root.options.use_time || root.options.time) {
       var now = new Date ();
       return ([([now.getHours (), now.getMinutes (), now.getSeconds ()].join (':')+'.'+now.getMilliseconds ()).blue]).concat (args);
     } else {

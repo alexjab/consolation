@@ -2,7 +2,7 @@ var should = require ('should');
 
 var consolation = require ('../consolation.js');
 
-console = consolation ({title: 'test.consolation.js', time: true});
+console = consolation ({title: 'test.consolation.js'});
 
 console.info ('Running tests for consolation...');
 console.ok ("This console.log is OK");
@@ -14,14 +14,15 @@ describe ('consolation.options', function () {
   it ('should override the default options with the parameters', function (done) {
     var console = consolation ({
       'title': 'some test',
-      'time': true,
+      'use_time': true,
+      'use_symbols': true,
       'log_level': 'warn',
       'foo': 'bar',
       'baz': true,
       'potato': 42
     });
 
-    console.options.should.eql ({'title': 'some test', 'time': true, 'log_level': 'warn', 'foo': 'bar', 'baz': true, 'potato': 42});
+    console.options.should.eql ({'title': 'some test', 'use_time': true, 'use_symbols': true, 'log_level': 'warn', 'foo': 'bar', 'baz': true, 'potato': 42});
 
     done ();
   });
@@ -40,19 +41,19 @@ describe ('consolation._args', function () {
 describe ('consolation._color', function () {
   it ('should return an array of colored strings and untouched other types', function (done) {
     console._color ([
-      'foo', 4, 8, undefined, null, {'one': 1}, ['one', 1]
+      'foo', 4, 8, null, {'one': 1}, ['one', 1]
     ], 'green').should.eql ([
-      'foo'.green, 4, 8, undefined, null, {'one': 1}, ['one', 1]
+      'foo'.green, 4, 8, null, {'one': 1}, ['one', 1]
     ]);
     console._color ([
-      'bar', 15, 16, undefined, null, {'two': 2}, ['two', 2]
+      'bar', 15, 16, null, {'two': 2}, ['two', 2]
     ], 'red').should.eql ([
-      'bar'.red, 15, 16, undefined, null, {'two': 2}, ['two', 2]
+      'bar'.red, 15, 16, null, {'two': 2}, ['two', 2]
     ]);
     console._color ([
-      'baz', 23, 42, undefined, null, {'three': 3}, ['three', 3]
+      'baz', 23, 42, null, {'three': 3}, ['three', 3]
     ], 'yellow').should.eql ([
-      'baz'.yellow, 23, 42, undefined, null, {'three': 3}, ['three', 3]
+      'baz'.yellow, 23, 42, null, {'three': 3}, ['three', 3]
     ]);
 
     done ();
@@ -61,7 +62,7 @@ describe ('consolation._color', function () {
 
 describe ('consolation._symbol', function () {
   it ('should return an array with an appended symbol', function (done) {
-    var list = ['foo', 'bar', 'baz', 0, 1, 2, undefined];
+    var list = ['foo', 'bar', 'baz', 0, 1, 2];
 
     var expected = list.slice (0)
     expected.push ("✓".green);
@@ -83,6 +84,14 @@ describe ('consolation._symbol', function () {
     expected.push ("♪".yellow);
     console._symbol (list, 'yellow', 'note').should.eql (expected);
 
+    console.options.use_symbols = false;
+
+    expected = list.slice (0)
+    console._symbol (list, 'yellow', 'note').should.eql (expected);
+
+    expected = list.slice (0)
+    console._symbol (list, 'cyan', 'check').should.eql (expected);
+
     done ();
   });
 });
@@ -93,7 +102,7 @@ describe ('consolation._title', function () {
     console = consolation ({
       'title': title
     });
-    var list = ['foo', 'bar', 'baz', 0, 1, 2, undefined];
+    var list = ['foo', 'bar', 'baz', 0, 1, 2];
     var expected = list.slice (0)
     expected.unshift (('['+title+']').grey);
     console._title (list).should.eql (expected);
@@ -105,9 +114,9 @@ describe ('consolation._title', function () {
 describe ('consolation._time', function () {
   it ('should return an array with a prepended time', function (done) {
     console = consolation ({
-      'time': true
+      'use_time': true
     });
-    var list = ['foo', 'bar', 'baz', 0, 1, 2, undefined];
+    var list = ['foo', 'bar', 'baz', 0, 1, 2];
     var actual = console._time (list);
     var expected = new RegExp ("[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,3}");
     actual.length.should.be.above (0);
