@@ -15,12 +15,13 @@ describe ('consolation.options', function () {
     var console = consolation ({
       'title': 'some test',
       'time': true,
+      'log_level': 'warn',
       'foo': 'bar',
       'baz': true,
       'potato': 42
     });
 
-    console.options.should.eql ({'title': 'some test', 'time': true, 'foo': 'bar', 'baz': true, 'potato': 42});
+    console.options.should.eql ({'title': 'some test', 'time': true, 'log_level': 'warn', 'foo': 'bar', 'baz': true, 'potato': 42});
 
     done ();
   });
@@ -61,17 +62,26 @@ describe ('consolation._color', function () {
 describe ('consolation._symbol', function () {
   it ('should return an array with an appended symbol', function (done) {
     var list = ['foo', 'bar', 'baz', 0, 1, 2, undefined];
+
     var expected = list.slice (0)
     expected.push ("✓".green);
-    console._symbol (list, 'green', 'tick').should.eql (expected);
+    console._symbol (list, 'green', 'check').should.eql (expected);
 
     expected = list.slice (0)
     expected.push ("✓".red);
-    console._symbol (list, 'red', 'tick').should.eql (expected);
+    console._symbol (list, 'red', 'check').should.eql (expected);
 
     expected = list.slice (0)
     expected.push ("✗".red);
-    console._symbol (list, 'red', 'ballot').should.eql (expected);
+    console._symbol (list, 'red', 'cross').should.eql (expected);
+
+    expected = list.slice (0)
+    expected.push ("⚠".cyan);
+    console._symbol (list, 'cyan', 'warning-sign').should.eql (expected);
+
+    expected = list.slice (0)
+    expected.push ("♪".yellow);
+    console._symbol (list, 'yellow', 'note').should.eql (expected);
 
     done ();
   });
@@ -108,6 +118,23 @@ describe ('consolation._time', function () {
     var actual_color = actual.match (expected).input;
     var actual_time = actual.match (expected)[0];
     actual_color.should.equal (actual_time.blue);
+
+    done ();
+  });
+});
+
+describe ('consolation._level', function () {
+  it ('should return true or false depending on the method and the log level option', function (done) {
+    var levels = ['info', 'ok', 'warn', 'err'];
+    var fns = {'info': [true, false, false, false], 'ok': [true, true, false, false], 'warn': [true, true, true, false], 'err': [true, true, true, true]};
+
+    levels.forEach (function (level, index) {
+      levels.forEach (function (fn) {
+        var actual = console._level (fn, level);
+        var expected = fns[fn][index];
+        (expected === actual).should.be.true;
+      });
+    });
 
     done ();
   });

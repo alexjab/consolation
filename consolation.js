@@ -5,7 +5,8 @@ var consolation = module.exports = function () {
 
   root.options = {
     'title': '',
-    'time': false
+    'time': false,
+    'log_level': 'info'
   };
 
   var options = arguments[0] || {};
@@ -24,7 +25,7 @@ var consolation = module.exports = function () {
 
   root._symbol = function (args, color, symb) {
     args = args.slice ();
-    var _symb = {"tick": "✓", "ballot": "✗", "warning-sign": "⚠"}[symb] || "";
+    var _symb = {"check": "✓", "cross": "✗", "warning-sign": "⚠", "note": "♪"}[symb] || "";
     args.push (_symb[color] || _symb);
     return args;
   };
@@ -49,29 +50,45 @@ var consolation = module.exports = function () {
     }
   };
 
-  root._fn = function (_arguments, color, symb) {
-    var args = root._args (_arguments);
-    args = root._color (args, color);
-    args = root._symbol (args, color, symb);
-    args = root._title (args);
-    args = root._time (args);
-    return console.log.apply (this, args);
+  root._level = function (fn, level) {
+    if (level === 'err' && fn === 'err') {
+      return true;
+    } if (level === 'warn' && (fn === 'warn' || fn === 'err')) {
+      return true;
+    } if (level === 'ok' && (fn === 'ok' || fn === 'warn' || fn === 'err')) {
+      return true;
+    } if (level === 'info' && (fn === 'info' || fn === 'ok' || fn === 'warn' || fn === 'err')) {
+      return true;
+    }
+    return false;
+  };
+
+  root._fn = function (_arguments, color, symb, fn) {
+    if (root._level (fn, root.options.log_level)) {
+      var args = root._args (_arguments);
+      args = root._color (args, color);
+      args = root._symbol (args, color, symb);
+      args = root._title (args);
+      args = root._time (args);
+      return console.log.apply (this, args);
+    }
+    return false;
   };
 
   root.ok = function () {
-    return root._fn (arguments, 'green', 'tick');
+    return root._fn (arguments, 'green', 'check', 'ok');
   };
 
   root.err = function () {
-    return root._fn (arguments, 'red', 'ballot');
+    return root._fn (arguments, 'red', 'cross', 'err');
   };
 
   root.info = function () {
-    return root._fn (arguments, 'cyan');
+    return root._fn (arguments, 'cyan', 'note', 'info');
   };
 
   root.warn = function () {
-    return root._fn (arguments, 'yellow', 'warning-sign');
+    return root._fn (arguments, 'yellow', 'warning-sign', 'warn');
   };
 
   return root;

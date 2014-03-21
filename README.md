@@ -26,11 +26,12 @@ console.warn ("This console.log is a WARNING");
 ###Options
 You can pass options when creating the object:
 ```
-console = consolation ({title: 'My file name', time: true});
+console = consolation ({title: 'My file name', time: true, log_level: 'warn'});
 ```
 Available options:
  * `title [String]`: the title of your logger, usually (but not necessarily) the name of the file (default is nothing),
- * `time [Boolean]`: whether to display the time on each log line (default is `false`)
+ * `time [Boolean]`: whether to display the time on each log line (default is `false`),
+ * `log_level [String]`: the minimum level from which logs are displayed (can take values from `['info', 'ok', 'warn', 'err']`, and default is `'info'`).
 
 ##Tests
 Testing is done using [mocha](http://visionmedia.github.io/mocha/) and [should.js](https://github.com/visionmedia/should.js/), so you might wanna get your hands on those as well:
