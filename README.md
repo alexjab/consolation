@@ -1,17 +1,19 @@
 consolation
 ===========
+[![NPM version](https://badge.fury.io/js/consolation.png)](https://www.npmjs.org/package/consolation)
 
 This module adds some sprinkles to node's vanilla console. It uses [colors.js](https://github.com/Marak/colors.js) and some cool unicode characters.
 
 ##How it looks
-![image](http://i.imgur.com/OZXgAuy.png)
+![image](http://i.imgur.com/0W0I2Ka.png)
 
-##Usage
-###Getting started
+##Getting started
+###Installation
 ```
 npm install consolation
 ```
 
+### Basic usage
 ```
 var consolation = require ('consolation');
 
@@ -42,3 +44,6 @@ and then:
 ```
 make test
 ```
+
+## Misc.
+PR, comments and suggestions are welcome !
