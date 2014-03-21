@@ -118,7 +118,7 @@ describe ('consolation._time', function () {
     });
     var list = ['foo', 'bar', 'baz', 0, 1, 2];
     var actual = console._time (list);
-    var expected = new RegExp ("[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,3}");
+    var expected = new RegExp ("[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}");
     actual.length.should.be.above (0);
     actual = actual[0];
     (typeof actual).should.equal ('string');

@@ -1,6 +1,6 @@
 consolation
 ===========
-[![NPM version](https://badge.fury.io/js/consolation.png)](https://www.npmjs.org/package/consolation)
+[![NPM version](https://badge.fury.io/js/consolation.png)](http://badge.fury.io/js/consolation)
 
 This module adds some sprinkles to node's vanilla console. It uses [colors.js](https://github.com/Marak/colors.js) and some cool unicode characters.
 

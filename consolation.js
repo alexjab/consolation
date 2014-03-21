@@ -53,7 +53,20 @@ var consolation = module.exports = function () {
     args = args.slice ();
     if (root.options.use_time || root.options.time) {
       var now = new Date ();
-      return ([([now.getHours (), now.getMinutes (), now.getSeconds ()].join (':')+'.'+now.getMilliseconds ()).blue]).concat (args);
+      var hms = [now.getHours (), now.getMinutes (), now.getSeconds ()].map (function (item) {
+        item = item.toString ();
+        item = (item.length === 2)?item:'0'+item;
+        return item;
+      });
+      var ms = now.getMilliseconds ().toString ();
+      if (ms.length === 0) {
+        ms += '000';
+      } else if (ms.length === 1) {
+        ms += '00';
+      } else if (ms.length === 2) {
+        ms += '0';
+      }
+      return ([(hms.join (':')+'.'+ms).blue]).concat (args);
     } else {
       return args;
     }
