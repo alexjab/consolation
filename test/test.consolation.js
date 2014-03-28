@@ -2,7 +2,7 @@ var should = require ('should');
 
 var consolation = require ('../consolation.js');
 
-console = consolation ({title: 'test.consolation.js'});
+var console = new consolation ({title: 'test.consolation.js'});
 
 console.info ('Running tests for consolation...');
 console.ok ("This console.log is OK");

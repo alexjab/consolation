@@ -17,7 +17,7 @@ npm install consolation
 ```
 var consolation = require ('consolation');
 
-console = consolation ();
+console = new consolation ();
 
 console.ok ("This console.log is OK");
 console.info ("This console.log is an INFO");
