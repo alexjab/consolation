@@ -12,7 +12,7 @@ console.warn ("This console.log is a WARNING");
 
 describe ('consolation.options', function () {
   it ('should override the default options with the parameters', function (done) {
-    var console = consolation ({
+    var console = new consolation ({
       'title': 'some test',
       'use_time': true,
       'use_symbols': true,
@@ -99,7 +99,7 @@ describe ('consolation._symbol', function () {
 describe ('consolation._title', function () {
   it ('should return an array with an prepended title', function (done) {
     var title = "My very long title !";
-    console = consolation ({
+    console = new consolation ({
       'title': title
     });
     var list = ['foo', 'bar', 'baz', 0, 1, 2];
@@ -113,7 +113,7 @@ describe ('consolation._title', function () {
 
 describe ('consolation._time', function () {
   it ('should return an array with a prepended time', function (done) {
-    console = consolation ({
+    console = new consolation ({
       'use_time': true
     });
     var list = ['foo', 'bar', 'baz', 0, 1, 2];

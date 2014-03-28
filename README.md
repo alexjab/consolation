@@ -28,7 +28,7 @@ console.warn ("This console.log is a WARNING");
 ###Options
 You can pass options when creating the object:
 ```
-console = consolation ({
+console = new consolation ({
   title: 'My cool title', use_time: false, use_symbol: false, log_level: 'warn'
 });
 ```
@@ -37,11 +37,6 @@ Available options:
  * `use_time [Boolean]`: whether to display the time on each log line (default `true`),
  * `use_symbols [Boolean]`: whether to display a nice unicode symbol at the end of each log line (default is `true`),
  * `log_level [String]`: the minimum level from which logs are displayed (can take values from `['info', 'ok', 'warn', 'err']`, and default is `'info'`).
-
-###Changes from version 0.0.8
-
- * deprecation warnings: I changed the `time` parameter and replaced it with `use_time` which is more clear on what it does; current setups that still use `time` will work until version `0.1.0`,
- * displaying the time and the filename as shown in the screenshot is now the default behavior; I figured out it would be nice to have this feature out of the box. The title used is the filename.
 
 ##Tests
 Testing is done using [mocha](http://visionmedia.github.io/mocha/) and [should.js](https://github.com/visionmedia/should.js/), so you might wanna get your hands on those as well:
