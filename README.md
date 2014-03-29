@@ -29,7 +29,7 @@ console.warn ('This console.log is a WARNING');
 You can pass options when creating the object:
 ```
 var console = new consolation ({
-  title: 'My cool title', use_time: false, use_symbol: false, log_level: 'warn'
+  title: 'My cool title', use_time: false, use_symbols: false, log_level: 'warn'
 });
 ```
 Available options:

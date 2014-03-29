@@ -1,6 +1,6 @@
 {
   "name": "consolation",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Add some flavors to node's default console.log",
   "main": "consolation.js",
   "scripts": {
@@ -8,7 +8,9 @@
   },
   "keywords": [
     "console",
-    "logger"
+    "logger",
+    "log",
+    "colors"
   ],
   "author": " <alex@jablon.me>",
   "license": "MIT",
