@@ -2,7 +2,7 @@ consolation
 ===========
 [![NPM version](https://badge.fury.io/js/consolation.png)](http://badge.fury.io/js/consolation)
 
-This module adds some sprinkles to node's vanilla console. It uses [colors.js](https://github.com/Marak/colors.js) and some cool unicode characters.
+This module adds some sprinkles to node's vanilla console.
 
 ##How it looks
 ![image](http://i.imgur.com/0W0I2Ka.png)
@@ -19,10 +19,10 @@ var consolation = require ('consolation');
 
 var console = new consolation ();
 
-console.ok ("This console.log is OK");
-console.info ("This console.log is an INFO");
-console.err ("This console.log is an ERROR");
-console.warn ("This console.log is a WARNING");
+console.ok ('This console.log is OK');
+console.info ('This console.log is an INFO');
+console.err ('This console.log is an ERROR');
+console.warn ('This console.log is a WARNING');
 ```
 
 ###Options
@@ -39,7 +39,7 @@ Available options:
  * `log_level [String]`: the minimum level from which logs are displayed (can take values from `['info', 'ok', 'warn', 'err']`, and default is `'info'`).
 
 ##Tests
-Testing is done using [mocha](http://visionmedia.github.io/mocha/) and [should.js](https://github.com/visionmedia/should.js/), so you might wanna get your hands on those as well:
+Testing is done using [mocha](http://visionmedia.github.io/mocha/), [should.js](https://github.com/visionmedia/should.js/) and [colors.js](https://github.com/Marak/colors.js), so you might wanna get your hands on those as well:
 ```
 make install && npm install mocha -g
 ```

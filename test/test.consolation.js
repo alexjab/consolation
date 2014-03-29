@@ -1,14 +1,16 @@
 var should = require ('should');
 
+var colors = require ('colors');
+
 var consolation = require ('../consolation.js');
 
 var console = new consolation ({title: 'test.consolation.js'});
 
-console.info ('Running tests for consolation...');
-console.ok ("This console.log is OK");
-console.info ("This console.log is an INFO");
-console.err ("This console.log is an ERROR");
-console.warn ("This console.log is a WARNING");
+console.log ('Running tests for consolation...');
+console.info ('INFO', {'foo': 'bar', 'baz': true}, ['foo', 'bar', 'baz'], null, undefined);
+console.ok ('OK', {'foo': 'bar', 'baz': true}, ['foo', 'bar', 'baz'], null, undefined);
+console.warn ('WARNING', {'foo': 'bar', 'baz': true}, ['foo', 'bar', 'baz'], null, undefined);
+console.err ('ERR', {'foo': 'bar', 'baz': true}, ['foo', 'bar', 'baz'], null, undefined);
 
 describe ('consolation.options', function () {
   it ('should override the default options with the parameters', function (done) {
@@ -39,73 +41,34 @@ describe ('consolation._args', function () {
 });
 
 describe ('consolation._color', function () {
-  it ('should return an array of colored strings and untouched other types', function (done) {
-    console._color ([
-      'foo', 4, 8, null, {'one': 1}, ['one', 1]
-    ], 'green').should.eql ([
-      'foo'.green, 4, 8, null, {'one': 1}, ['one', 1]
-    ]);
-    console._color ([
-      'bar', 15, 16, null, {'two': 2}, ['two', 2]
-    ], 'red').should.eql ([
-      'bar'.red, 15, 16, null, {'two': 2}, ['two', 2]
-    ]);
-    console._color ([
-      'baz', 23, 42, null, {'three': 3}, ['three', 3]
-    ], 'yellow').should.eql ([
-      'baz'.yellow, 23, 42, null, {'three': 3}, ['three', 3]
-    ]);
+  it ('should return a color string with special chars', function (done) {
+    console._color ('info').should.equal ('\x1B[36m');
+    console._color ('ok').should.equal ('\x1B[32m');
+    console._color ('warn').should.equal ('\x1B[33m');
+    console._color ('err').should.equal ('\x1B[31m');
 
     done ();
   });
 });
 
 describe ('consolation._symbol', function () {
-  it ('should return an array with an appended symbol', function (done) {
-    var list = ['foo', 'bar', 'baz', 0, 1, 2];
-
-    var expected = list.slice (0)
-    expected.push ("✓".green);
-    console._symbol (list, 'green', 'check').should.eql (expected);
-
-    expected = list.slice (0)
-    expected.push ("✓".red);
-    console._symbol (list, 'red', 'check').should.eql (expected);
-
-    expected = list.slice (0)
-    expected.push ("✗".red);
-    console._symbol (list, 'red', 'cross').should.eql (expected);
-
-    expected = list.slice (0)
-    expected.push ("⚠".cyan);
-    console._symbol (list, 'cyan', 'warning-sign').should.eql (expected);
-
-    expected = list.slice (0)
-    expected.push ("♪".yellow);
-    console._symbol (list, 'yellow', 'note').should.eql (expected);
-
-    console.options.use_symbols = false;
-
-    expected = list.slice (0)
-    console._symbol (list, 'yellow', 'note').should.eql (expected);
-
-    expected = list.slice (0)
-    console._symbol (list, 'cyan', 'check').should.eql (expected);
+  it ('should return a symbol char', function (done) {
+    console._symbol ('info').should.equal ('♪');
+    console._symbol ('ok').should.equal ('✓');
+    console._symbol ('warn').should.equal ('⚠');
+    console._symbol ('err').should.equal ('✗');
 
     done ();
   });
 });
 
 describe ('consolation._title', function () {
-  it ('should return an array with an prepended title', function (done) {
-    var title = "My very long title !";
-    console = new consolation ({
-      'title': title
+  it ('should return a colored title', function (done) {
+    var title = 'My very long title !';
+    var console = new consolation ({
+      title: title
     });
-    var list = ['foo', 'bar', 'baz', 0, 1, 2];
-    var expected = list.slice (0)
-    expected.unshift (('['+title+']').grey);
-    console._title (list).should.eql (expected);
+    console._title ().should.eql (('['+title+']').grey);
 
     done ();
   });
@@ -113,14 +76,12 @@ describe ('consolation._title', function () {
 
 describe ('consolation._time', function () {
   it ('should return an array with a prepended time', function (done) {
-    console = new consolation ({
-      'use_time': true
+    var console = new consolation ({
+      use_time: true
     });
-    var list = ['foo', 'bar', 'baz', 0, 1, 2];
-    var actual = console._time (list);
-    var expected = new RegExp ("[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}");
+    var actual = console._time ();
+    var expected = new RegExp ('[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}');
     actual.length.should.be.above (0);
-    actual = actual[0];
     (typeof actual).should.equal ('string');
     actual.search (expected).should.be.above (-1);
 
