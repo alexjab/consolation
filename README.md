@@ -17,7 +17,7 @@ npm install consolation
 ```
 var consolation = require ('consolation');
 
-console = new consolation ();
+var console = new consolation ();
 
 console.ok ("This console.log is OK");
 console.info ("This console.log is an INFO");
@@ -28,7 +28,7 @@ console.warn ("This console.log is a WARNING");
 ###Options
 You can pass options when creating the object:
 ```
-console = new consolation ({
+var console = new consolation ({
   title: 'My cool title', use_time: false, use_symbol: false, log_level: 'warn'
 });
 ```
