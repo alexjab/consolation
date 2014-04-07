@@ -36,10 +36,11 @@ Available options:
  * `title [String]`: the title of your logger, usually (but not necessarily) the name of the file (default is nothing),
  * `use_time [Boolean]`: whether to display the time on each log line (default `true`),
  * `use_symbols [Boolean]`: whether to display a nice unicode symbol at the end of each log line (default is `true`),
- * `log_level [String]`: the minimum level from which logs are displayed (can take values from `['info', 'ok', 'warn', 'err']`, and default is `'info'`).
+ * `log_level [String]`: the minimum level from which logs are displayed (can take values from `['info', 'ok', 'warn', 'err']`, and default is `'info'`),
+ * `monochrome [Boolean]`: output black and white log lines. This is useful when you need to output log lines to a file (default is `false`).
 
 ##Tests
-Testing is done using [mocha](http://visionmedia.github.io/mocha/), [should.js](https://github.com/visionmedia/should.js/) and [colors.js](https://github.com/Marak/colors.js), so you might wanna get your hands on those as well:
+Testing is done using [mocha](http://visionmedia.github.io/mocha/) and [should.js](https://github.com/visionmedia/should.js/) so you might wanna get your hands on those as well:
 ```
 make install && npm install mocha -g
 ```

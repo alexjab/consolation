@@ -7,7 +7,8 @@ var consolation = function () {
     title: process.argv.length > 1?path.basename (process.argv[1]):'',
     use_time: true,
     use_symbols: true,
-    log_level: 'info'
+    log_level: 'info',
+    monochrome: false
   };
 
   var options = arguments[0] || {};
@@ -40,7 +41,7 @@ consolation.prototype._symbol = function (fn) {
 };
 
 consolation.prototype._title = function () {
-  return '\x1B[90m['+this.options.title+']\x1B[39m';
+  return (this.options.monochrome?'':'\x1B[90m')+'['+this.options.title+']';
 };
 
 consolation.prototype._time = function () {
@@ -58,7 +59,7 @@ consolation.prototype._time = function () {
   } else if (ms.length === 2) {
     ms += '0';
   }
-  return '\x1B[34m'+hms.join (':')+'.'+ms+'\x1B[39m';
+  return (this.options.monochrome?'':'\x1B[34m')+hms.join (':')+'.'+ms;
 };
 
 consolation.prototype._level = function (fn, level) {
@@ -85,12 +86,16 @@ consolation.prototype._fn = function (_arguments, fn) {
     if (this.options.title) {
       args.push (this._title ());
     }
-    args.push (this._color (fn));
+    if (!this.options.monochrome) {
+      args.push (this._color (fn));
+    }
     args = args.concat (_args);
-    if (this.options.use_symbols) {
+    if (!this.options.monochrome) {
       args.push (this._symbol (fn));
     }
-    args.push ('\x1B[39m');
+    if (this.options.use_symbols) {
+      args.push ('\x1B[39m');
+    }
     return console.log.apply (this, args);
   }
   return false;

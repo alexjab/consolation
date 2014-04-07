@@ -1,7 +1,5 @@
 var should = require ('should');
 
-var colors = require ('colors');
-
 var consolation = require ('../consolation.js');
 
 var console = new consolation ({title: 'test.consolation.js'});
@@ -15,16 +13,17 @@ console.err ('ERR', {'foo': 'bar', 'baz': true}, ['foo', 'bar', 'baz'], null, un
 describe ('consolation.options', function () {
   it ('should override the default options with the parameters', function (done) {
     var console = new consolation ({
-      'title': 'some test',
-      'use_time': true,
-      'use_symbols': true,
-      'log_level': 'warn',
-      'foo': 'bar',
-      'baz': true,
-      'potato': 42
+      title: 'some test',
+      use_time: true,
+      use_symbols: true,
+      log_level: 'warn',
+      monochrome: true,
+      foo: 'bar',
+      baz: true,
+      potato: 42
     });
 
-    console.options.should.eql ({'title': 'some test', 'use_time': true, 'use_symbols': true, 'log_level': 'warn', 'foo': 'bar', 'baz': true, 'potato': 42});
+    console.options.should.eql ({'title': 'some test', 'use_time': true, 'use_symbols': true, 'log_level': 'warn', 'monochrome': true, 'foo': 'bar', 'baz': true, 'potato': 42});
 
     done ();
   });
@@ -68,7 +67,7 @@ describe ('consolation._title', function () {
     var console = new consolation ({
       title: title
     });
-    console._title ().should.eql (('['+title+']').grey);
+    console._title ().should.eql ('\x1B[90m['+title+']');
 
     done ();
   });
@@ -87,7 +86,7 @@ describe ('consolation._time', function () {
 
     var actual_color = actual.match (expected).input;
     var actual_time = actual.match (expected)[0];
-    actual_color.should.equal (actual_time.blue);
+    actual_color.should.equal ('\x1B[34m'+actual_time);
 
     done ();
   });
