@@ -94,10 +94,10 @@ consolation.prototype._fn = function (_arguments, fn) {
       }
     }
     args = args.concat (_args);
-    if (!this.options.monochrome) {
+    if (this.options.use_symbols) {
       args.push (this._symbol (fn));
     }
-    if (this.options.use_symbols) {
+    if (!this.options.monochrome) {
       args.push ('\x1B[39m');
     }
     return console.log.apply (this, args);
