@@ -87,7 +87,11 @@ consolation.prototype._fn = function (_arguments, fn) {
       args.push (this._title ());
     }
     if (!this.options.monochrome) {
-      args.push (this._color (fn));
+      if (args.length) {
+        args[args.length-1] += this._color (fn);
+      } else {
+        args.push (this._color (fn));
+      }
     }
     args = args.concat (_args);
     if (!this.options.monochrome) {
