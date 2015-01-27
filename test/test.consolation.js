@@ -15,6 +15,7 @@ describe ('consolation.options', function () {
     var console = new consolation ({
       title: 'some test',
       use_time: true,
+      use_date: true,
       use_symbols: true,
       log_level: 'warn',
       monochrome: true,
@@ -23,7 +24,7 @@ describe ('consolation.options', function () {
       potato: 42
     });
 
-    console.options.should.eql ({'title': 'some test', 'use_time': true, 'use_symbols': true, 'log_level': 'warn', 'monochrome': true, 'foo': 'bar', 'baz': true, 'potato': 42});
+    console.options.should.eql ({'title': 'some test', 'use_time': true, 'use_date': true, 'use_symbols': true, 'log_level': 'warn', 'monochrome': true, 'foo': 'bar', 'baz': true, 'potato': 42});
 
     done ();
   });
@@ -82,6 +83,32 @@ describe ('consolation._time', function () {
     var expected = new RegExp ('[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}');
     actual.length.should.be.above (0);
     (typeof actual).should.equal ('string');
+    actual.search (expected).should.be.above (-1);
+
+    var actual_color = actual.match (expected).input;
+    var actual_time = actual.match (expected)[0];
+    actual_color.should.equal ('\x1B[34m'+actual_time);
+
+    done ();
+  });
+});
+
+describe ('consolation._date', function () {
+  it ('should return an array with a prepended date', function (done) {
+    console = new consolation ({
+      use_date: true
+    });
+    var actual = console._date ();
+    var now = new Date ();
+    var ymd = [now.getFullYear (), now.getMonth () + 1, now.getDate ()].map (function (item) {
+      item = item.toString ();
+      item = (item.length === 1)?'0'+item:item;
+      return item;
+    });
+
+    actual.length.should.be.above (0);
+    var expected = new RegExp ("[0-9]{4}-[0-9]{2}-[0-9]{2}");
+    
     actual.search (expected).should.be.above (-1);
 
     var actual_color = actual.match (expected).input;
