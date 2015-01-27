@@ -6,6 +6,7 @@ var consolation = function () {
   this.options = {
     title: process.argv.length > 1?path.basename (process.argv[1]):'',
     use_time: true,
+    use_date: true,
     use_symbols: true,
     log_level: 'info',
     monochrome: false
@@ -62,6 +63,16 @@ consolation.prototype._time = function () {
   return (this.options.monochrome?'':'\x1B[34m')+hms.join (':')+'.'+ms;
 };
 
+consolation.prototype._date = function () {
+  var now = new Date ();
+  var ymd = [now.getFullYear (), now.getMonth () + 1, now.getDate ()].map (function (item) {
+    item = item.toString ();
+    item = (item.length === 1)?'0'+item:item;
+    return item;
+  });
+  return (this.options.monochrome?'':'\x1B[34m')+ymd.join ('-');
+};
+
 consolation.prototype._level = function (fn, level) {
   if (level === 'err' && fn === 'err') {
     return true;
@@ -80,6 +91,9 @@ consolation.prototype._fn = function (_arguments, fn) {
     var _args = this._args (_arguments);
 
     var args = [];
+    if (this.options.use_date) {
+      args.push (this._date ());
+    }
     if (this.options.use_time) {
       args.push (this._time ());
     }
