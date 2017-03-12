@@ -41,7 +41,7 @@ Available options:
  * `monochrome [Boolean]`: output black and white log lines. This is useful when you need to output log lines to a file (default is `false`).
 
 ##Tests
-Testing is done using [mocha](http://visionmedia.github.io/mocha/) and [should.js](https://github.com/visionmedia/should.js/) so you might wanna get your hands on those as well:
+Testing is done using [mocha](http://mochajs.org/) and [should.js](https://github.com/visionmedia/should.js/) so you might wanna get your hands on those as well:
 ```
 make install && npm install mocha -g
 ```
